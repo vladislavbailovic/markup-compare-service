@@ -17,7 +17,8 @@ const read = async relpath => new Promise( ( resolve, reject ) => {
 	const html1 = await read( 'test/data/original.html' );
 	const html2 = await browser.get_page( 'http://premium.wpmudev.org' );
 	console.dir(
-		diff.quick( html1, html2 )
+		diff.quick( html1, html2 ).resources,
+		{ depth: 6 }
 	);
 })();
 
