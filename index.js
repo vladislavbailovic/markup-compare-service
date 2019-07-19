@@ -13,11 +13,19 @@ const read = async relpath => new Promise( ( resolve, reject ) => {
 	} );
 } );
 
+const write = async ( relpath, data ) => new Promise( ( resolve, reject ) => {
+	fs.writeFile( path.join( __dirname, relpath ), data, err => {
+		return err
+			? reject( err )
+			: resolve();
+	} );
+} );
+
 (async () => {
 	const html1 = await read( 'test/data/original.html' );
 	const html2 = await browser.get_page( 'http://premium.wpmudev.org' );
 	console.dir(
-		diff.quick( html1, html2 ).resources,
+		diff.quick( html1, html2 ),
 		{ depth: 6 }
 	);
 })();

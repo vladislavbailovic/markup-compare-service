@@ -39,10 +39,11 @@ const count_resources = html => {
 const array_diff = ( original, updated ) => {
 	let added = [],
 		removed = [];
-	console.log( 'Diffing', original.length, 'vs', updated.length );
+	original.sort();
+	updated.sort();
 	diff.diffArrays( original, updated ).forEach( part => {
-		const add = !!part.added;
-		const rmv = !!part.removed;
+		const add = part.added;
+		const rmv = part.removed;
 		part.value.forEach( val => {
 			if ( add ) added.push( val );
 			if ( rmv ) removed.push( val );
