@@ -5,6 +5,7 @@ const diff = require( 'diff' );
 const get_diff = ( original, updated ) => {
 	let added = [],
 		removed = [],
+		difflen = original.split( /\s+/ ).length,
 		dff = [];
 	diff.diffWords( original, updated ).forEach( part => {
 		let val = part.value;
@@ -18,6 +19,7 @@ const get_diff = ( original, updated ) => {
 		dff.push( val );
 	} );
 	return {
+		original: difflen,
 		added: added.length,
 		removed: removed.length,
 		diff: added.length || removed.length ? dff.join( '' ) : ''
