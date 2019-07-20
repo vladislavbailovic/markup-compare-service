@@ -3,6 +3,8 @@ const cheerio = require( 'cheerio' );
 const url = require( 'url' );
 const diff = require( 'diff' );
 
+const size = require( './diff/size' );
+
 const count_resources = html => {
 	const $ = cheerio.load( html );
 	
@@ -79,19 +81,9 @@ const resources_diff = ( original, updated ) => {
 	};
 };
 
-const size_diff = ( original, updated ) => {
-	const size_diff = updated.length - original.length;
-	const direction = size_diff > 0 ? '+' : '-';
-	return {
-		original: original.length,
-		updated: updated.length,
-		diff: `${direction}${size_diff}`
-	};
-};
-
 module.exports.quick = ( original, updated ) => {
 	return {
-		size: size_diff( original, updated ),
+		size: size.diff( original, updated ),
 		resources: resources_diff( original, updated )
 	};
 };

@@ -23,7 +23,8 @@ const write = async ( relpath, data ) => new Promise( ( resolve, reject ) => {
 
 (async () => {
 	const html1 = await read( 'test/data/original.html' );
-	const html2 = await browser.get_page( 'http://premium.wpmudev.org' );
+	const html2 = await read( 'test/data/compare.html' );
+	//const html2 = await browser.get_page( 'http://premium.wpmudev.org' );
 	console.dir(
 		diff.quick( html1, html2 ),
 		{ depth: 6 }
