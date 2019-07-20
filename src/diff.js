@@ -12,6 +12,7 @@ module.exports.quick = ( original, updated ) => {
 		size: size.diff( original, updated ),
 		links: resources.links( original, updated ),
 		scripts: resources.scripts( original, updated ),
-		title: meta.title( original, updated )
+		title: meta.title( original, updated ),
+		description: meta.description( original, updated ),
 	};
 };

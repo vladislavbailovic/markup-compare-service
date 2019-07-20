@@ -20,7 +20,7 @@ const get_diff = ( original, updated ) => {
 	return {
 		added: added.length,
 		removed: removed.length,
-		diff: added.length || removed.length ? dff.join( ' ' ) : ''
+		diff: added.length || removed.length ? dff.join( '' ) : ''
 	};
 };
 
@@ -29,7 +29,16 @@ const get_tag_contents = ( tag, html ) => {
 	return $( tag ).text();
 };
 
+const get_tag_attr = ( tag, attr, html ) => {
+	const $ = cheerio.load( html );
+	return $( tag ).attr( attr );
+};
+
 module.exports.title = ( original, updated ) => get_diff( 
 	get_tag_contents( 'title', original ),
 	get_tag_contents( 'title', updated )
+);
+module.exports.description = ( original, updated ) => get_diff(
+	get_tag_attr( 'meta[name="description"]', 'content', original ),
+	get_tag_attr( 'meta[name="description"]', 'content', updated )
 );
