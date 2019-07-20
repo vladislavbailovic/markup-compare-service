@@ -6,26 +6,23 @@ const diff = require( 'diff' );
 const count_resources = ( html, selector, attr ) => {
 	const $ = cheerio.load( html );
 	
-	let links = [],
-		link_roots = [];
+	let links = {};
 	$( selector ).each( ( idx, el ) => {
 		const link = $( el ).attr( attr );
 		const lobj = url.parse( link );
 		lobj.search = false;
 		lobj.fragment = false;
 		const clean = url.format( lobj );
-		links.push( link );
-		link_roots.push( clean );
+		links[ clean ] = link;
 	} );
 
-	return {
-		raw: links,
-		clean: link_roots
-	};
+	return links;
 };
 
-const array_diff = ( original, updated ) => {
-	let added = [],
+const array_diff = ( orig, upd ) => {
+	let original = Object.keys( orig ),
+		updated = Object.keys( upd ),
+		added = [],
 		removed = [],
 		dff = [];
 	original.sort();
@@ -34,6 +31,7 @@ const array_diff = ( original, updated ) => {
 		const add = part.added;
 		const rmv = part.removed;
 		part.value.forEach( val => {
+			val = orig[ val ] || upd[ val ];
 			if ( add ) {
 				added.push( val );
 				val = `<ins>${val}</ins>`;
@@ -62,12 +60,9 @@ const resources_diff = ( original, updated, selector, attr ) => {
 		diff: false
 	};
 
-	return res1.clean.length === res2.clean.length
+	return Object.keys( res1 ).length === Object.keys( res2 ).length
 		? item
-		: Object.assign(
-			{ difflen: Math.abs( res2.clean.length - res1.clean.length ) },
-			array_diff( res1.raw, res2.raw )
-		);
+		: array_diff( res1, res2 );
 };
 
 module.exports.links = ( original, updated ) => resources_diff( original, updated, 'link[rel="stylesheet"]', 'href' )
