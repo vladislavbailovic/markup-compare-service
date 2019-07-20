@@ -18,8 +18,8 @@ const get_diff = ( original, updated ) => {
 		dff.push( val );
 	} );
 	return {
-		added: added,
-		removed: removed,
+		added: added.length,
+		removed: removed.length,
 		diff: added.length || removed.length ? dff.join( ' ' ) : ''
 	};
 };

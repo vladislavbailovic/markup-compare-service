@@ -45,7 +45,7 @@ const array_diff = ( original, updated ) => {
 		} );
 	} );
 	return {
-		added: added.lenght,
+		added: added.length,
 		removed: removed.length,
 		diff: dff.join( '<br />' )
 	};

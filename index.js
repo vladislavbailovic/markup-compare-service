@@ -31,7 +31,7 @@ const write = async ( relpath, data ) => new Promise( ( resolve, reject ) => {
 	console.dir( result, { depth: 6 });
 	let dff = [];
 	Object.keys( result ).forEach( key => {
-		dff.push( render.html( key, result[ key ].diff ) );
+		dff.push( render.html( key, result[ key ] ) );
 	} );
 	write( 'test/data/out.html', dff.join( '<hr/>' ) );
 	
