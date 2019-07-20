@@ -64,7 +64,10 @@ const resources_diff = ( original, updated, selector, attr ) => {
 
 	return res1.clean.length === res2.clean.length
 		? item
-		: array_diff( res1.raw, res2.raw );
+		: Object.assign(
+			{ difflen: Math.abs( res2.clean.length - res1.clean.length ) },
+			array_diff( res1.raw, res2.raw )
+		);
 };
 
 module.exports.links = ( original, updated ) => resources_diff( original, updated, 'link[rel="stylesheet"]', 'href' )
