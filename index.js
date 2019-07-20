@@ -28,7 +28,7 @@ const write = async ( relpath, data ) => new Promise( ( resolve, reject ) => {
 	//const html2 = await browser.get_page( 'http://premium.wpmudev.org' );
 	//
 	const result = diff.quick( html1, html2 );
-//	console.dir( result, { depth: 6 });
+	console.dir( result, { depth: 6 });
 	let dff = [];
 	Object.keys( result ).forEach( key => {
 		dff.push( render.html( key, result[ key ].diff ) );
