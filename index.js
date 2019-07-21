@@ -24,7 +24,8 @@ const write = async ( relpath, data ) => new Promise( ( resolve, reject ) => {
 
 (async () => {
 	//const html1 = await read( 'test/data/original.html' );
-	const html1 = await browser.get_page( 'http://premium.wpmudev.org/blog/?test=1' );
+	const html1 = await read( 'test/data/blog1.html' );
+	//const html1 = await browser.get_page( 'http://premium.wpmudev.org/blog/?test=1' );
 	//const html2 = await read( 'test/data/compare.html' );
 	const html2 = await browser.get_page( 'http://premium.wpmudev.org/blog/?test=2' );
 	//
