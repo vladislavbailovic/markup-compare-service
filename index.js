@@ -29,11 +29,8 @@ const write = async ( relpath, data ) => new Promise( ( resolve, reject ) => {
 	//
 	const result = diff.quick( html1, html2 );
 	console.dir( result, { depth: 6 });
-	let dff = [];
-	Object.keys( result ).forEach( key => {
-		dff.push( render.html( key, result[ key ] ) );
-	} );
-	write( 'test/data/out.html', dff.join( '<hr/>' ) );
+	let dff = render.html( result );
+	write( 'test/data/out.html', dff );
 	
 })();
 
