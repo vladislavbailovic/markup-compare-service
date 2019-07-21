@@ -7,7 +7,7 @@ const fragment = ( name, changes ) => {
 	let title = strings.title[ name ] || name;
 
 	let description = strings.description[ name ] || '';
-	description = !!description ? `<p>${description}</p>` : '';
+	description = description ? `<p>${description}</p>` : '';
 
 	let changed = changes.difflen ? changes.difflen : changes.added + changes.removed;
 	let percentage = Math.ceil( ( changed / changes.original ) * 100 );

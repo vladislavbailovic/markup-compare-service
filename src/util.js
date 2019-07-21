@@ -18,7 +18,7 @@ module.exports.array_diff = ( orig, upd ) => {
 				added.push( val );
 				val = `<ins>${val}</ins>`;
 			} else if ( rmv ) {
-				removed.push( val )
+				removed.push( val );
 				val = `<del>${val}</del>`;
 			}
 			dff.push( val );

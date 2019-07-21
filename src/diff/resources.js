@@ -35,5 +35,5 @@ const resources_diff = ( original, updated, selector, attr ) => {
 		: util.array_diff( res1, res2 );
 };
 
-module.exports.links = ( original, updated ) => resources_diff( original, updated, 'link[rel="stylesheet"]', 'href' )
-module.exports.scripts = ( original, updated ) => resources_diff( original, updated, 'script[src]', 'src' )
+module.exports.links = ( original, updated ) => resources_diff( original, updated, 'link[rel="stylesheet"]', 'href' );
+module.exports.scripts = ( original, updated ) => resources_diff( original, updated, 'script[src]', 'src' );
