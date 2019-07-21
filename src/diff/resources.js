@@ -1,7 +1,8 @@
 'use strict';
 const cheerio = require( 'cheerio' );
 const url = require( 'url' );
-const diff = require( 'diff' );
+
+const util = require( '../util' );
 
 const count_resources = ( html, selector, attr ) => {
 	const $ = cheerio.load( html );
@@ -19,37 +20,6 @@ const count_resources = ( html, selector, attr ) => {
 	return links;
 };
 
-const array_diff = ( orig, upd ) => {
-	let original = Object.keys( orig ),
-		updated = Object.keys( upd ),
-		added = [],
-		removed = [],
-		dff = [];
-	original.sort();
-	updated.sort();
-	diff.diffArrays( original, updated ).forEach( part => {
-		const add = part.added;
-		const rmv = part.removed;
-		part.value.forEach( val => {
-			val = orig[ val ] || upd[ val ];
-			if ( add ) {
-				added.push( val );
-				val = `<ins>${val}</ins>`;
-			} else if ( rmv ) {
-				removed.push( val )
-				val = `<del>${val}</del>`;
-			}
-			dff.push( val );
-		} );
-	} );
-	return {
-		original: original.length,
-		added: added.length,
-		removed: removed.length,
-		diff: dff.join( '<br />' )
-	};
-};
-
 const resources_diff = ( original, updated, selector, attr ) => {
 	const res1 = count_resources( original, selector, attr );
 	const res2 = count_resources( updated, selector, attr );
@@ -62,7 +32,7 @@ const resources_diff = ( original, updated, selector, attr ) => {
 
 	return Object.keys( res1 ).length === Object.keys( res2 ).length
 		? item
-		: array_diff( res1, res2 );
+		: util.array_diff( res1, res2 );
 };
 
 module.exports.links = ( original, updated ) => resources_diff( original, updated, 'link[rel="stylesheet"]', 'href' )
