@@ -4,7 +4,7 @@
   "description": "Compares markups of the pages to check for differences across updates",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tap"
   },
   "author": "",
   "license": "ISC",
