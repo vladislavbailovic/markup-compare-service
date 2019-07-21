@@ -2,6 +2,8 @@
 const strings = require( './strings' );
 
 const fragment = ( name, changes ) => {
+	if ( ! changes.diff ) return '';
+
 	let title = strings.title[ name ] || name;
 
 	let description = strings.description[ name ] || '';
