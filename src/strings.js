@@ -6,26 +6,38 @@ const seodesc = 'Changes in this section directly affect how your site will be p
 const ogdesc = seodesc.replace( /search engines/, 'search engines and social media sites' );
 const content = 'We also check the plain text body copy differences of your home page. Depending on the type of your site and frequency of homepage content changes, some discrepancies here might be normal';
 module.exports = {
+	section: {
+		title: {
+			size: 'Homepage size',
+			resources: 'Resources',
+			seo: 'SEO',
+			content: 'Content',
+		},
+		desc: {
+			seo: seodesc,
+			resources: resourcedesc,
+		}
+	},
 	title: {
 		size: 'Size',
-		links: 'Resources: stylesheet links',
-		scripts: 'Resources: external scripts',
-		title: 'SEO: page title',
-		description: 'SEO: page description',
+		links: 'Stylesheet links',
+		scripts: 'External scripts',
+		title: 'Page title',
+		description: 'Page description',
 		ogtitle: 'OpenGraph: title',
 		ogdescription: 'OpenGraph: description',
 		ogimages: 'OpenGraph: images',
-		content: 'Content: plain text body copy',
+		content: 'Plain text body copy',
 	},
 	description: {
 		size: sizedesc,
-		links: resourcedesc,
-		scripts: resourcedesc,
-		title: seodesc,
-		description: seodesc,
-		ogtitle: ogdesc,
-		ogdescription: ogdesc,
-		ogimages: ogdesc,
+		links: 'These are your stylesheet links that got changed between updates - these affect how your homepage looks like',
+		scripts: 'These are your external javascript files that got changed between updates',
+		title: 'These changes affect how your site will appear in search results',
+		description: 'These changes affect how your site will be ranked in searches',
+		ogtitle: 'These changes affect how your homepage will look on social sites',
+		ogdescription: 'These changes affect how your homepage will be described as on social sites',
+		ogimages: 'These changes affect what your homepage will use as image on social sites',
 		content: content,
 	}
 };

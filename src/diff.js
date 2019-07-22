@@ -38,6 +38,7 @@ const get_content = ( original, updated ) => {
 module.exports.all = ( original, updated ) => {
 	return {
 		size: get_size( original, updated ),
+		resources: get_resources( original, updated ),
 		seo: get_seo( original, updated ),
 		content: get_content( original, updated ),
 	};
