@@ -3,19 +3,16 @@ const strings = require( './strings' );
 
 const fragment = ( name, changes ) => {
 	if ( ! changes.diff ) return '';
+	if ( ! changes.percentage ) return '';
 
 	let title = strings.title[ name ] || name;
 
 	let description = strings.description[ name ] || '';
 	description = description ? `<p>${description}</p>` : '';
 
-	let changed = changes.difflen ? changes.difflen : changes.added + changes.removed;
-	let percentage = Math.ceil( ( changed / changes.original ) * 100 );
-	if ( 0 === percentage ) return '';
-
-	let meta = `+${changes.added} -${changes.removed} ( ${percentage}% )`;
+	let meta = `+${changes.added} -${changes.removed} ( ${changes.percentage}% )`;
 	let diff = changes.diff;
-	if ( percentage > 25 && diff.length > 500 ) {
+	if ( changes.percentage > 25 && diff.length > 500 ) {
 		diff = '<i>&lt;abbreviated&gt;</i>';
 	}
 	let html = `<div class="diff">${diff}</div><footer class="meta"><p>${meta}</p></footer>`;
@@ -26,6 +23,20 @@ const fragment = ( name, changes ) => {
 			</header>
 			${html}
 		</article>`;
+};
+
+const section = ( name, items ) => {
+	console.log( name, items );
+	let dff = [];
+	const sect = strings.section || {};
+	Object.keys( items ).forEach( key => {
+		dff.push( fragment( key, items[ key ] ) );
+	} );
+	return `<section id="${name}">
+		<header>
+			<h2>${ ( sect.title || {} )[ name ] || name }</h2>
+			<p>${ ( sect.desc || {} )[ name ] || '' }</h2>
+		</header>` + dff.join( '' ) + '</section>';
 };
 
 const style = () => {
@@ -39,8 +50,8 @@ del { text-decoration: none; background: #FF82AB; }
 
 module.exports.html = diffs => {
 	let dff = [];
-	Object.keys( diffs ).forEach( key => {
-		dff.push( fragment( key, diffs[ key ] ) );
+	Object.keys( diffs ).forEach( sect => {
+		dff.push( section( sect, diffs[ sect ] ) );
 	} );
-	return '<section>' + dff.join( '' ) + '</section>' + style();
+	return '<main>' + dff.join( '' ) + '</main>' + style();
 };

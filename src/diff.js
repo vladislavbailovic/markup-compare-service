@@ -4,16 +4,41 @@ const resources = require( './diff/resources' );
 const meta = require( './diff/meta' );
 const content = require( './diff/content' );
 
-module.exports.quick = ( original, updated ) => {
+const get_diff_object = ( diff ) => {
+	const changed = diff.difflen ? diff.difflen : diff.added + diff.removed;
+	const percentage = Math.ceil( ( changed / diff.original ) * 100 );
+	
+	return Object.assign( diff, {
+		percentage: percentage,
+	} );
+};
+
+const get_size = ( original, updated ) => {
+	return { size: get_diff_object( size.diff( original, updated ) ) };
+};
+const get_resources = ( original, updated ) => {
 	return {
-		size: size.diff( original, updated ),
-		links: resources.links( original, updated ),
-		scripts: resources.scripts( original, updated ),
-		title: meta.title( original, updated ),
-		description: meta.description( original, updated ),
-		ogtitle: meta.ogtitle( original, updated ),
-		ogdescription: meta.ogdescription( original, updated ),
-		ogimages: meta.ogimages( original, updated ),
-		content: content.diff( original, updated ),
+		scripts: get_diff_object( resources.scripts( original, updated ) ),
+		links: get_diff_object( resources.links( original, updated ) ),
+	};
+};
+const get_seo = ( original, updated ) => {
+	return {
+		title: get_diff_object( meta.title( original, updated ) ),
+		description: get_diff_object( meta.description( original, updated ) ),
+		ogtitle: get_diff_object( meta.ogtitle( original, updated ) ),
+		ogdescription: get_diff_object( meta.ogdescription( original, updated ) ),
+		ogimages: get_diff_object( meta.ogimages( original, updated ) ),
+	};
+};
+const get_content = ( original, updated ) => {
+	return { content: get_diff_object( content.diff( original, updated ) ) };
+};
+
+module.exports.all = ( original, updated ) => {
+	return {
+		size: get_size( original, updated ),
+		seo: get_seo( original, updated ),
+		content: get_content( original, updated ),
 	};
 };
