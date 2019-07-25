@@ -1,10 +1,11 @@
 'use strict';
 
-const puppeteer = require( 'puppeteer' );
+const puppeteer = require( 'puppeteer-core' );
 
 const get_page = async url => {
 	const browser = await puppeteer.launch({
 		headless: true,
+		executablePath: '/opt/headless_shell',
 		args: [ '--no-sandbox', '--disable-gpu', '--single-process', '--no-zygote' ],
 	});
 	const page = await browser.newPage();

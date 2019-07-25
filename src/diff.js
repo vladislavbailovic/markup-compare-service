@@ -9,37 +9,31 @@ const get_diff_object = ( diff ) => {
 	const percentage = Math.ceil( ( changed / diff.original ) * 100 );
 	
 	return Object.assign( diff, {
-		percentage: percentage,
+		percentage: percentage || 0,
 	} );
 };
 
-const get_size = ( original, updated ) => {
-	return { size: get_diff_object( size.diff( original, updated ) ) };
-};
-const get_resources = ( original, updated ) => {
-	return {
-		scripts: get_diff_object( resources.scripts( original, updated ) ),
-		links: get_diff_object( resources.links( original, updated ) ),
-	};
-};
-const get_seo = ( original, updated ) => {
-	return {
-		title: get_diff_object( meta.title( original, updated ) ),
-		description: get_diff_object( meta.description( original, updated ) ),
-		ogtitle: get_diff_object( meta.ogtitle( original, updated ) ),
-		ogdescription: get_diff_object( meta.ogdescription( original, updated ) ),
-		ogimages: get_diff_object( meta.ogimages( original, updated ) ),
-	};
-};
-const get_content = ( original, updated ) => {
-	return { content: get_diff_object( content.diff( original, updated ) ) };
-};
+const get_size = ( original, updated ) => (
+	{ size: get_diff_object( size.diff( original, updated ) ) }
+);
+const get_resources = ( original, updated ) => ( {
+	scripts: get_diff_object( resources.scripts( original, updated ) ),
+	links: get_diff_object( resources.links( original, updated ) ),
+} );
+const get_seo = ( original, updated ) => ( {
+	title: get_diff_object( meta.title( original, updated ) ),
+	description: get_diff_object( meta.description( original, updated ) ),
+	ogtitle: get_diff_object( meta.ogtitle( original, updated ) ),
+	ogdescription: get_diff_object( meta.ogdescription( original, updated ) ),
+	ogimages: get_diff_object( meta.ogimages( original, updated ) ),
+} );
+const get_content = ( original, updated ) => (
+	{ content: get_diff_object( content.diff( original, updated ) ) }
+);
 
-module.exports.all = ( original, updated ) => {
-	return {
-		size: get_size( original, updated ),
-		resources: get_resources( original, updated ),
-		seo: get_seo( original, updated ),
-		content: get_content( original, updated ),
-	};
-};
+module.exports.all = ( original, updated ) => ( {
+	size: get_size( original, updated ),
+	resources: get_resources( original, updated ),
+	seo: get_seo( original, updated ),
+	content: get_content( original, updated ),
+} );

@@ -1,0 +1,83 @@
+service: markup-compare-service-test
+
+custom:
+    bucket_name: ve-test-markup-compare-bucket
+    stageVariables:
+        bucketName: ${self:custom.bucket_name}
+
+plugins:
+    - serverless-plugin-stage-variables
+
+provider:
+    name: aws
+    runtime: nodejs8.10
+    iamRoleStatements:
+        - Effect: "Allow"
+          Action:
+              - "s3:ListBucket"
+              - "s3:Put*"
+              - "s3:GetObject"
+          Resource:
+              - "arn:aws:s3:::${self:custom.bucket_name}"
+              - "arn:aws:s3:::${self:custom.bucket_name}/*"
+
+package:
+    exclude:
+        - chrome-aws-lambda/**
+        - test/**
+        - bin/**
+
+resources:
+    Resources:
+        ScreenshotBucket:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: ${self:custom.bucket_name}
+                AccessControl: PublicRead
+
+layers:
+    chrome:
+        path: browser
+
+functions:
+    get:
+        handler: handler.original
+        timeout: 30
+        memorySize: 2048
+        events:
+            - http:
+                method: GET
+                path: /markup/take
+        layers:
+            - { Ref: ChromeLambdaLayer }
+
+    list:
+        handler: handler.list
+        timeout: 15
+        events:
+            - http:
+                method: GET
+                path: markup
+
+    compare:
+        handler: handler.compare
+        timeout: 30
+        memorySize: 2048
+        events:
+            - http:
+                method: GET
+                path: /markup/compare
+        layers:
+            - { Ref: ChromeLambdaLayer }
+
+    demo:
+        handler: handler.demo
+        timeout: 30
+        memorySize: 2048
+        events:
+            - http:
+                method: GET
+                path: /markup/demo
+        layers:
+            - { Ref: ChromeLambdaLayer }
+

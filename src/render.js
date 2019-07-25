@@ -26,7 +26,6 @@ const fragment = ( name, changes ) => {
 };
 
 const section = ( name, items ) => {
-	console.log( name, items );
 	let dff = [];
 	const sect = strings.section || {};
 	Object.keys( items ).forEach( key => {

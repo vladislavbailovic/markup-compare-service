@@ -1,4 +1,5 @@
 'use strict';
+const crypto = require( 'crypto' );
 const cheerio = require( 'cheerio' );
 
 const util = require( '../util' );
@@ -17,8 +18,9 @@ const get_tags_attr = ( tag, attr, html ) => {
 	const $ = cheerio.load( html );
 	let attrs = {};
 	$( tag ).each( ( idx, tag ) => {
-		const key = Math.random();
-		attrs[ key ] = $( tag ) .attr( attr ) || '';
+		const val = $( tag ).attr( attr ) || '';
+		const key = crypto.createHash( 'md5' ).update( val ).digest( 'hex' );
+		attrs[ key ] = val;
 	} );
 	return attrs;
 };

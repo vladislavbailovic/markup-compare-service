@@ -25,6 +25,7 @@ const resources_diff = ( original, updated, selector, attr ) => {
 	const res2 = count_resources( updated, selector, attr );
 
 	const item = {
+		original: Object.keys( res1 ).length,
 		added: 0,
 		removed: 0,
 		diff: false
