@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "eslint": "^6.1.0",
-    "aws-sdk": "^2.491.0",
+    "aws-sdk": "^2.814.0",
     "serverless-plugin-stage-variables": "^1.9.2",
     "tap": "^14.4.2"
   }
